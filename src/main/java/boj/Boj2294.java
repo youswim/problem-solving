@@ -38,6 +38,7 @@ public class Boj2294 {
 
         for (int i = 1; i < dp.length; i++) {
             dp[i] = Integer.MAX_VALUE - 1;
+            // -1을 하지 않으면 45번 줄에서 dp[j - coin] + 1 할 때 overflow로 오답이 된다.
         }
 
         for (Integer coin : coins) {
