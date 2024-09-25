@@ -22,11 +22,11 @@ public class Boj1520 {
         int rowSize = Integer.parseInt(st.nextToken()); // M
         int colSize = Integer.parseInt(st.nextToken()); // N
 
-        map = new int[rowSize + 1][colSize + 1];
+        map = new int[rowSize][colSize];
 
-        for (int i = 1; i < map.length; i++) {
+        for (int i = 0; i < map.length; i++) {
             st = new StringTokenizer(br.readLine());
-            for (int j = 1; j < map[0].length; j++) {
+            for (int j = 0; j < map[0].length; j++) {
                 map[i][j] = Integer.parseInt(st.nextToken());
             }
         }
@@ -38,13 +38,13 @@ public class Boj1520 {
     static int fun() {
 
         dp = new int[map.length][map[0].length];
-        for (int row = 1; row < map.length; row++) {
-            for (int col = 1; col < map[0].length; col++) {
+        for (int row = 0; row < map.length; row++) {
+            for (int col = 0; col < map[0].length; col++) {
                 dp[row][col] = -1;
             }
         }
 
-        return dfs(1, 1);
+        return dfs(0, 0);
 
     }
 
@@ -65,7 +65,7 @@ public class Boj1520 {
             int nRow = row + dRow[i];
             int nCol = col + dCol[i];
 
-            if (nRow < 1 || nCol < 1 || nRow >= map.length || nCol >= map[0].length) {
+            if (nRow < 0 || nCol < 0 || nRow >= map.length || nCol >= map[0].length) {
                 continue;
             }
 
