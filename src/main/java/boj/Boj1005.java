@@ -70,6 +70,9 @@ public class Boj1005 {
         // 위상정렬 및 최소 시간 계산
         while (!q.isEmpty()) {
             Integer currentNode = q.remove();
+            if (currentNode == destNode) {
+                return nodeWeightResults[currentNode];
+            }
 
             List<Integer> afterNodes = nodeLines.get(currentNode);
 
