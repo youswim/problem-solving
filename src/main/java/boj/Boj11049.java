@@ -32,21 +32,28 @@ public class Boj11049 {
     static long calculateMinTimes(int matrixCnt, int[][] matrixs) {
         long [][] dp = new long[matrixCnt][matrixCnt];
 
-        // dp 초기화
-        for (int i = 0; i + 1 < matrixCnt; i++) {
-            dp[i][i + 1] = (long) matrixs[i][0] * matrixs[i][1] * matrixs[i + 1][1];
-        }
+        for (int term = 1; term < matrixCnt; term++) {
+            for (int start = 0; start < matrixCnt; start++) {
 
-        for (int i = 0; i < matrixCnt - 1; i++) {
-            int stage = i + 2; // 이거 변경 필요
-            for (int j = 0; j + stage < matrixCnt; j++) {
-                dp[j][j + stage] = Math.min(
-                        dp[j + 1][j + stage] + (long) matrixs[j][0] * matrixs[j][1] * matrixs[j + stage][1],
-                        dp[j][j + stage - 1] + (long) matrixs[j][0] * matrixs[j + stage][0] * matrixs[j + stage][1]
-                );
+                if (term + start == matrixCnt) break;
+
+                dp[start][start + term] = Integer.MAX_VALUE;
+
+                // [0][10] 이라면, [0][i] * [i+1][10] (0 <= i <= 10) 처럼 두 구간으로 나누어 곱의 최솟값을 계산한다.
+                for (int sep = start; sep < start + term; sep++) {
+
+                    dp[start][start + term] = Math.min(
+                            dp[start][start + term],
+                            dp[start][sep] + dp[sep + 1][start + term] + (long) matrixs[start][0] * matrixs[sep][1] * matrixs[start + term][1]
+                    );
+
+                }
 
             }
         }
+
         return dp[0][matrixCnt - 1];
+
     }
+
 }

@@ -18,7 +18,12 @@ class Boj11049Test {
     }
 
     public static Stream<Arguments> source() {
-        return Stream.of(Arguments.of(3, new int[][]{{5, 3}, {3, 2}, {2, 6}}, 90));
+        return Stream.of(
+                Arguments.of(3, new int[][]{{5, 3}, {3, 2}, {2, 6}}, 90),
+                Arguments.of(4, new int[][]{{5, 4}, {4, 3}, {3, 2}, {2, 1}}, 38),
+                Arguments.of(8, new int[][]{{1, 100}, {100, 1}, {1, 100}, {100, 1}, {1, 100}, {100, 1}, {1, 100}, {100, 1}}, 403),
+                Arguments.of(4, new int[][]{{1, 100}, {100, 1}, {1, 100}, {100, 1}}, 201)
+        );
     }
 
 }
