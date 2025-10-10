@@ -21,34 +21,25 @@ public class Boj2473 {
 
         Arrays.sort(nums);
 
-        int lo = 0;
-        int hi = nums.length - 1;
-
         long min = Long.MAX_VALUE;
-        int[] res = new int[3];
-        while (lo < hi - 1) {
+        int[] answer = new int[3];
+        for (int i = 0; i < nums.length - 2; i++) {
+            int lo = i + 1;
+            int hi = nums.length - 1;
+            while (lo < hi) {
+                long tmpSum = (long) nums[i] + nums[lo] + nums[hi]; // 형변환을 별도로 해주지 않으면 오버플로우 발생
+                long tmpSumAbs = Math.abs(tmpSum);
+                if (tmpSumAbs < min) {
+                    min = tmpSumAbs;
+                    answer[0] = nums[i];
+                    answer[1] = nums[lo];
+                    answer[2] = nums[hi];
+                }
 
-            int midIdx = calculatePartialMin(lo, hi, nums);
-            long partialRes = nums[lo] + nums[hi] + nums[midIdx];
-            long partialResAbs = Math.abs(partialRes);
-            if (partialResAbs < min) {
-                res[0] = nums[lo];
-                res[1] = nums[midIdx];
-                res[2] = nums[hi];
-                min = partialResAbs;
-            }
-            // 이 부분이 오답의 결정적 원인.
-            // 합을 구하는데에는 3개의 숫자를 사용하나, 두개의 숫자만 사용하여 판단하다보니 문제 발생
-            long twoPointRes = nums[lo] + nums[hi];
-            if (twoPointRes > 0) {
-                hi--;
-            } else if (twoPointRes < 0) {
-                lo++;
-            } else {
-                if (partialRes > 0) {
-                    hi--;
-                } else if (partialRes < 0) {
+                if (tmpSum < 0) {
                     lo++;
+                } else if (tmpSum > 0) {
+                    hi--;
                 } else {
                     break;
                 }
@@ -56,21 +47,7 @@ public class Boj2473 {
 
         }
 
-        System.out.println(res[0] + " " + res[1] + " " + res[2]);
-    }
+        System.out.println(answer[0] + " " + answer[1] + " " + answer[2]);
 
-    static int calculatePartialMin(int lo, int hi, int[] nums) {
-        long min = Long.MAX_VALUE;
-        int minIdx = 0;
-        long base = nums[lo] + nums[hi];
-        for (int i = lo + 1; i < hi; i++) {
-            long sum = Math.abs(base + nums[i]);
-            if (min > sum) {
-                min = sum;
-                minIdx = i;
-            }
-        }
-
-        return minIdx;
     }
 }
